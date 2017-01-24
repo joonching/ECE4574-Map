@@ -23,7 +23,8 @@
 		- Check that the graph has pre-initialized values (i.e. 1000 and 100)
 		- Check that when you add a weight the weight and the corresponding node is changed
 */
-
+#ifndef GRAPH_HEADER
+#define GRAPH_HEADER
 
 #include <iostream>
 #include <cstdlib>
@@ -34,7 +35,12 @@ using namespace std;
 struct wt_diff
 {
 	int weight;
-	int difficulty;
+	int total_cost;
+	int movement_cost;
+	int h_val;
+	//int parent;
+	//vector<int> prev;
+	bool visited;
 };
 
 
@@ -46,9 +52,27 @@ class graph
 		graph(int node_size);
 		void delete_graph();
 		void add_weight(int cur_pos, int destination, int weight);
-		void display_matrix();
-		
+		void assign_h_vals(int des);
+		int return_lowest_path(int start, int des, int pos, vector<int> &path);
+		int get_movementc(int pos);
+		int get_hval(int pos);
+		int get_totalc(int pos);
+		bool get_visited(int pos);
+
+		void set_hvals(int pos, int val);
+		void set_weight(int pos, int val, int mc);
+		void set_totalc(int pos, int val);
+		void set_nodes(int n);
+		void set_visited(bool val);
+		void set_movementc(int pos, int val);
+		void calculate_costs(int pos);
+		vector<int> return_neighbor(int pos);
+
+
 		//**FUNCTIONS FOR TESTING**
+		void display_matrix();
+		void display_hvals();
+		void display_maptc();
 		int return_weight(int position, int destination);
 		int return_nodes();
 		int return_size_of_nodes();
@@ -57,4 +81,6 @@ class graph
 		void create_map();
 		int nodes;
 		vector<vector<wt_diff>> my_graph;
-};
+};	
+
+#endif
