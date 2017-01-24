@@ -27,9 +27,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += map.cpp \
-    ../../Map/src/graph/graph.cpp
+    ../../Map/src/graph/graph.cpp \
+    ../../Map/src/a_star/a_star.cpp
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 HEADERS += \
-    ../../Map/src/graph/graph.h
+    ../../Map/src/graph/graph.h \
+    ../../Map/src/a_star/a_star.h
 

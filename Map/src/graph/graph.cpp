@@ -14,6 +14,7 @@ graph::graph(int node_size)
 void graph::set_nodes(int n)
 {
 	nodes = n;
+	my_graph.clear();
 	create_map();
 }
 /*
@@ -52,7 +53,17 @@ void graph::create_map()
 		//my_graph[i][i].prev.push_back(-1);
 	}
 }
-
+void graph::reset(bool clear)
+{
+	for (int i = 0; i < nodes; i++)
+	{
+		my_graph[i][i].visited = false;
+		my_graph[i][i].weight = 5;
+		my_graph[i][i].h_val = nodes*nodes;
+		if (clear)
+			my_graph[i][i].movement_cost = 1000;
+	}
+}
 void graph::display_matrix()
 {
 	cout << "\n\n\n";
@@ -66,7 +77,6 @@ void graph::display_matrix()
 		cout << endl;
 	}
 }
-
 void graph::display_maptc()
 {
 	cout << "\n\n\n";
@@ -77,7 +87,6 @@ void graph::display_maptc()
 		cout << endl;
 	}
 }
-
 void graph::display_hvals()
 {
 	cout << "\n\n\n";
@@ -88,7 +97,6 @@ void graph::display_hvals()
 		cout << endl;
 	}
 }
-
 int graph::return_lowest_path(int start, int des, int pos, vector<int> &path)
 {
 	my_graph[pos][pos].visited = true;
@@ -115,13 +123,14 @@ int graph::return_lowest_path(int start, int des, int pos, vector<int> &path)
 				node = index;
 				found = true;
 			}
-			cout << "node:" << node << endl;
+			//cout << "node:" << node << endl;
 		}
 	}
 	if (!found) {
 		path.pop_back();
 		node = path.back();
 	}
+	//cout << node;
 	return node;
 }
 int graph::get_hval(int pos)
@@ -140,13 +149,11 @@ void graph::set_hvals(int pos, int val)
 {
 	my_graph[pos][pos].h_val = val;
 }
-
 void graph::set_weight(int pos, int val, int mc)
 {
 	my_graph[pos][pos].weight = val;
 	my_graph[pos][pos].movement_cost = mc;
 }
-
 vector<int> graph::return_neighbor(int pos)
 {
 	vector<int> ret_vec;
@@ -156,10 +163,16 @@ vector<int> graph::return_neighbor(int pos)
 			ret_vec.push_back(i);
 		}
 	}
-
+	//print_neighbor(ret_vec);
 	return ret_vec;
 }
-
+void graph::print_neighbor(vector<int> neigh)
+{
+	for (int i = 0; i < neigh.size(); i++) {
+		cout << neigh[i] << " ";
+	}
+	cout << endl;
+}
 /*
 	TODO: FIX ... The order is wrong
 			...look at debugger and step through...problem is something with your prev
@@ -285,4 +298,10 @@ int graph::return_size_of_edges()
 int graph::return_size_of_nodes()
 {
 	return my_graph.size();
+}
+void graph::do_astar(graph& test_graph)
+{
+	//a_star pathfind;
+	//pathfind.construct_testmap1(test_graph);
+	//pathfind.start_path(7, 4);
 }

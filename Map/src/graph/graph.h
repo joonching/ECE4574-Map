@@ -16,12 +16,16 @@
 		- Only input should be for obstacle
 			+ obstacle should have weight to it and location -- for now the obstacles will be weight values from sensors
 				+ however, the obstacle's representation (i.e. weight) may change so keep it flexible
-
+		- The matrix movement class will only update its movement cost if the A-star chooses to
+			+ this does not add restriction though since when returning the lowest path it is done internally
+			+ dependecy is needed when calculating each nodes movment cost hoever
 
 	Testing (on QT):
 		- Check you can change the size of the nodes and the graph will correspondingly change
 		- Check that the graph has pre-initialized values (i.e. 1000 and 100)
 		- Check that when you add a weight the weight and the corresponding node is changed
+		- Check that you can correctly return the neighbors w/o the obstacle
+		- Check that you can correctly return the lowest path (i.e. node) correctly
 */
 #ifndef GRAPH_HEADER
 #define GRAPH_HEADER
@@ -70,6 +74,7 @@ class graph
 
 
 		//**FUNCTIONS FOR TESTING**
+		void print_neighbor(vector<int> neigh);
 		void display_matrix();
 		void display_hvals();
 		void display_maptc();
@@ -77,6 +82,8 @@ class graph
 		int return_nodes();
 		int return_size_of_nodes();
 		int return_size_of_edges();
+		void do_astar(graph& test_graph);
+		void reset(bool clear);
 	private:
 		void create_map();
 		int nodes;
