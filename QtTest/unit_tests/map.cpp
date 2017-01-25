@@ -24,6 +24,7 @@ private Q_SLOTS:
     void STAR_check_openlist();
     void STAR_check_no_obstacle();
     void STAR_check_path();
+    void STAR_check_new_obstacle_path();
     void cleanupTestCase();
 };
 
@@ -61,6 +62,7 @@ void map_test::populate_nodes2()
 
     test_graph.add_weight(5, 6, 2);
     test_graph.add_weight(7, 9, 2);
+    test_graph.add_weight(7, 0, 50);
 }
 void map_test::cleanupTestCase()
 {
@@ -87,7 +89,6 @@ void map_test::GRAPH_check_lowest_node_map1()
 }
 void  map_test::GRAPH_check_neighbors()
 {
-
     populate_nodes();
     vector<int> bad_list{1,2,7,8};
     vector<int> good_list{1,7,8};
@@ -206,6 +207,19 @@ void map_test::STAR_check_path()
     temp = star.return_path();
     for(int i = 0; i< temp.size(); i++) {
         QVERIFY2(temp[i] == test_path2[i], "PATH IS WRONG");
+    }
+}
+void map_test::STAR_check_new_obstacle_path()
+{
+     vector<int> test_path{7,9,1,3,5,6};
+    vector<int> temp;
+    populate_nodes2();
+    star.construct_testmap1(test_graph);
+    star.reset(true);
+    star.start_path(7,6);
+    temp = star.return_path();
+    for(int i = 0; i< temp.size(); i++) {
+        QVERIFY2(temp[i] == test_path[i], "PATH IS WRONG");
     }
 }
 
